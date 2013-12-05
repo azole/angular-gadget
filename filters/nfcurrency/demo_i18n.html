@@ -1,0 +1,22 @@
+<!doctype html>
+<html ng-app = "myApp">
+  <head>
+    <meta charset="utf-8">
+    <title>demo with i18n</title>
+    <script src="http://code.angularjs.org/1.2.3/angular.min.js"></script>
+    <script src="http://code.angularjs.org/1.2.3/i18n/angular-locale_zh-tw.js"></script>
+    <script src="app.js"></script>
+    <script src="nfcurrency.js"></script>
+  </head>
+  <body>
+    <div ng-controller="mainCtrl">
+      <div>
+        demo2: 有引入angular-locale_zh-tw.js <br>
+        http://code.angularjs.org/1.2.3/i18n/angular-locale_zh-tw.js
+      </div> <br>
+      <input type="number" ng-model="amount"> <br>
+      default currency symbol: {{amount | currency}}<br><br>
+      nfcurrency: {{amount | nfcurrency}}
+    </div>
+  </body>
+</html>
