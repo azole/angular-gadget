@@ -42,6 +42,34 @@ value 非常像 constant，只是他的值是可以被修改的。通常也用�
 範例程式：<a href="http://jsbin.com/ayohuz/5/edit">Value</a>
 
 ### Factory
+範例：
+```javascript
+app.factory('foo', function() {
+  var thisIsPrivate = "Private";
+  function getPrivate() {
+    return thisIsPrivate;
+  }
+
+  return {
+    variable: "This is public",
+    getPrivate: getPrivate
+  };
+});
+
+// or..
+
+app.factory('bar', function(a) {
+  return a * 2;
+});
+```
+factory 是最常用的 service，也是最容易理解的。
+
+factory 會回傳任何型別。如果是回傳物件，作者建議採用 <a href="http://addyosmani.com/resources/essentialjsdesignpatterns/book/#revealingmodulepatternjavascript" target="_blank">Revealing module pattern</a>。當然，你可以用任何你想用的方式使用它。
+
+如同之前所言，所有類型的 service 都是 singleton。所以當我們修改 foo.variable 時，所有其他地方也都會被修改。
+
+範例程式：<a href="http://jsbin.com/ayohuz/7/edit" target="_blank">Factory</a>
+
 ### Service
 ### Provider
 ### Decorator
