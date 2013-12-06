@@ -11,7 +11,7 @@ Angularjs 中有數種不同的service，每一種都有自己的使用情境。
 
 Note: singleton 是一種設計模式，他限制一個 class 的實例化 (instantiation) 只會實例化到一個物件 (object)，不管我們在什麼地方注入使用這個服務，都是在用同一個實例 (instance)。
 
-*(譯者注：實例化的過程就是利用 class 做一個 object 出來，這個 object 又可稱為 instance。) *
+*(譯者注：實例化的過程就是利用 class 做一個 object 出來，這個 object 又可稱為 instance。)*
 
 以下就開始介紹各種不同類型的 service。
 
@@ -30,6 +30,17 @@ Constant 經常用來作為 directives 之間的預設值設定。所以當你�
 範例程式：<a href="http://jsbin.com/ayohuz/2/edit">Constant</a>    
 
 ### Value
+範例：
+```javascript
+app.value('fooConfig', {    
+  config1: true,    
+  config2: "Default config2 but it can changes"    
+});
+```
+value 非常像 constant，只是他的值是可以被修改的。通常也用來當做 directives 的設定值。value 也很像 factory，只是 value 只能放值，不能計算。
+
+範例程式：<a href="http://jsbin.com/ayohuz/5/edit">Value</a>
+
 ### Factory
 ### Service
 ### Provider
