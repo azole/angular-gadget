@@ -17,7 +17,7 @@ Note: singleton 是一種設計模式，他限制一個 class 的實例化 (inst
 
 ### Constant
 範例：
-```
+```javascript
 app.constant('fooConfig', {     
   config1: true,     
   config2: "Default config2"     
