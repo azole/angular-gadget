@@ -7,5 +7,5 @@ Some useful angular gadget
 
 1. filters  
     1.1 nfcurrency
-2. tour
+2. tour  
     2.1 Understanding Service Types (譯文)(未完)  
