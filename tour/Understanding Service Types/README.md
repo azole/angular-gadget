@@ -71,5 +71,42 @@ factory 會回傳任何型別。如果是回傳物件，作者建議採用 <a hr
 範例程式：<a href="http://jsbin.com/ayohuz/7/edit" target="_blank">Factory</a>
 
 ### Service
+
+```javascript
+app.service('foo', function() {
+  var thisIsPrivate = "Private";
+  this.variable = "This is public";
+  this.getPrivate = function() {
+    return thisIsPrivate;
+  };
+});
+```
+*譯者：Constant, Value, Factory, Service, Provider 都是 Service 的一種，這邊的兩個 Service 不是同一個。很討厭吧...*
+
+service 跟 factory 很像，差別在於 service 會接收一個建構子，所以當我們在第一次使用他的時候，他會做一個 new Foo(); 的動作去實例化這個物件。記住，所有類型的 service 都是 singleton，所以不管在其他任何地方又用到這個 service，都會回傳同一個物件。
+
+事實上，跟下面這段範例很像：
+```javascript
+app.factory('foo2', function() {
+  return new Foobar();
+});
+
+
+function Foobar() {
+  var thisIsPrivate = "Private";
+  this.variable = "This is public";
+  this.getPrivate = function() {
+    return thisIsPrivate;
+  };
+}
+```
+Foobar 是一個 *class*，當我們第一次使用的時候，會在我們的 factory 中實例化它，然後回傳。如同 service，這個 Foobar 類別只會被實例化一次，當下次還要用到這個 factory 時，它將會回傳同一個物件。
+
+如果已經有一個類別，而我們想在我們的 service 中使用時，可以這樣寫：
+```javascript
+app.service('foo3', Foobar);
+```
+範例程式：<a href="http://jsbin.com/ayohuz/8/edit" target="_blank">Service</a>
+
 ### Provider
 ### Decorator
