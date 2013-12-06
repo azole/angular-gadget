@@ -30,8 +30,7 @@ Constant 經常用來作為 directives 之間的預設值設定。所以當你�
 範例程式：<a href="http://jsbin.com/ayohuz/2/edit">Constant</a>    
 
 ### Value
-範例：
-```javascript
+範例：```javascript
 app.value('fooConfig', {    
   config1: true,    
   config2: "Default config2 but it can changes"    
