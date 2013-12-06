@@ -83,7 +83,7 @@ app.service('foo', function() {
 ```
 *譯者：Constant, Value, Factory, Service, Provider 都是 Service 的一種，這邊的兩個 Service 不是同一個。很討厭吧...*
 
-service 跟 factory 很像，差別在於 service 會接收一個建構子，所以當我們在第一次使用他的時候，他會做一個 new Foo(); 的動作去實例化這個物件。記住，所有類型的 service 都是 singleton，所以不管在其他任何地方又用到這個 service，都會回傳同一個物件。
+service 跟 factory 很像，差別在於 service 會接收一個建構子，所以當我們在第一次使用它的時候，它會做一個 new Foo(); 的動作去實例化這個物件。記住，所有類型的 service 都是 singleton，所以不管在其他任何地方又用到這個 service，都會回傳同一個物件。
 
 事實上，跟下面這段範例很像：
 ```javascript
