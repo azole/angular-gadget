@@ -40,7 +40,7 @@ app.value('fooConfig', {
 value 非常像 constant，只是他的值是可以被修改的。通常也用來當做 directives 的設定值。value 也很像 factory，只是 value 只能放值，不能計算。
 
 範例程式：<a href="http://jsbin.com/ayohuz/5/edit">Value</a>
-
+  
 ### Factory
 ### Service
 ### Provider
