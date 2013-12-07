@@ -178,3 +178,32 @@ app.config(function(fooProvider) {
 範例程式：<a href="http://jsbin.com/ayohuz/9/edit" target="_blank">Provider</a>
 
 ### Decorator
+
+*這個是作者提供的 bonus 1。*
+
+如果你決定使用我給你的 foo service，但它少了你想用的 greet 函式，那你需要修改 fatory 嗎？不，你可以裝飾它：
+```javascript
+app.config(function($provide) {
+  $provide.decorator('foo', function($delegate) {
+    $delegate.greet = function() {
+      return "Hello, I am a new function of 'foo'";
+    };
+
+    return $delegate;
+  });
+});
+```
+$provide 是 Angular 內部用來建立各種類型 service 的工具。我們可以手動使用它，或是在我們的模組裡頭使用它提供的函式。$provide 有一個函式 decorator，可以用來裝飾我們的 service。這個函式會接收我們想要裝飾的 service 的名字，其後的回呼函式會接收一個叫做 $delegate 的物件，這個物件就是我們原本的 service 的實例 (instance)。
+
+在回呼函式裡我們可以把原本的 service 裝飾成我們想要的樣子。在我們這個例子中，我們增加了一個叫做 greet 的函式在我們的 service 中。然後我們回傳這個被修改過的 service。
+
+現在，當我們使用這個 service 時，它會有 greet 這個函式。如此<a href="http://jsbin.com/ayohuz/10/edit" target="_blank">範例程式</a>中所見。
+
+這種手動裝飾 service 的能力，讓我們在使用第三方提供的 services 時，我們可以以裝飾來取代複製修改。
+
+注意：constant 這種 service 不可以被裝飾。
+
+*譯者：我在看物件導向的材料時，有獨到這兩句話：1. Can be changed with minimal effort. 2. Can be extended without changing existing code. Angular 這個裝飾的能力，非常符合這兩點。*
+
+### 建立新的 instances
+
