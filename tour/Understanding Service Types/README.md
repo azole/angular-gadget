@@ -109,4 +109,70 @@ app.service('foo3', Foobar);
 範例程式：<a href="http://jsbin.com/ayohuz/8/edit" target="_blank">Service</a>
 
 ### Provider
+
+Provider 可以說是 factory 的老大哥，剛剛 factory 的最後一個例子，就很像下面這個範例：
+
+```javascript
+app.provider('foo', function() {
+
+  return {
+
+    $get: function() {
+      var thisIsPrivate = "Private";
+      function getPrivate() {
+        return thisIsPrivate;
+      }
+
+      return {
+        variable: "This is public",
+        getPrivate: getPrivate
+      };
+    }
+
+  };
+
+});
+```
+Provider 會需要一個 $get 的函式，用來被注入在其他需要用到的地方。所以當我們注入 foo 的時候，其實我們注入的是 $get。
+
+factory 已經很簡單了，為什麼我們還需要 provider 呢？ 這是因為 provider 可以在 config 階段裡頭被設定。見以下範例：
+```javascript
+app.provider('foo', function() {
+
+  var thisIsPrivate = "Private";
+
+  return {
+
+    setPrivate: function(newVal) {
+      thisIsPrivate = newVal;
+    },
+
+    $get: function() {
+      function getPrivate() {
+        return thisIsPrivate;
+      }
+
+      return {
+        variable: "This is public",
+        getPrivate: getPrivate
+      };
+    }
+
+  };
+
+});
+
+app.config(function(fooProvider) {
+  fooProvider.setPrivate('New value from config');
+});
+```
+
+這裡我們把 thisIsPrivate 搬到 $get外頭，然後新增一個 setPrivate 的函式，好在 config 階段用這個函式來改變 thisIsPrivate 的值。或許你會問，在 factory 中增加一個 setter 不是更容易嗎？這是因為，他們是有不同的目的。
+
+我們想要注入某個物件，但我們又想要提供一個方法可以來設定他。例如，一個包著 resource 的 service，然後想要設定我們想要用的 URL。或是，當我們採用第三方開發的 service 時，像是 restangular，允許我們根據我們的目標去設定它。
+
+這邊要特別注意的是，在 config 階段，我們必須用 *nameProvider* 去取代 *name*，使用時，才只用 *name*。
+
+看到這邊，就能明白，我們其實已經在我們的應用中設定了某些 services 了，像是 $routeProvider 跟 $locationProvider，分別設定了 routes 跟 htmlmode。
+
 ### Decorator
