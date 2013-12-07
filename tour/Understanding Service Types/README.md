@@ -175,4 +175,6 @@ app.config(function(fooProvider) {
 
 看到這邊，就能明白，我們其實已經在我們的應用中設定了某些 services 了，像是 $routeProvider 跟 $locationProvider，分別設定了 routes 跟 htmlmode。
 
+範例程式：<a href="http://jsbin.com/ayohuz/9/edit" target="_blank">Provider</a>
+
 ### Decorator
