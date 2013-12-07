@@ -207,3 +207,91 @@ $provide 是 Angular 內部用來建立各種類型 service 的工具。我們�
 
 ### 建立新的 instances
 
+所有類型的 service 都是 singleton的，但我們可以建立一個 singleton factory 來建立新的實例。在我們更深入之前，請記住 singleton services 是一個對的方向，我們並不想要改變這一點。只是在一些很罕見的例子當中，有可能會需要建立一些新的實例，當你需要這樣做的時候，可以參照一下範例程式：
+
+```javascript
+// Our class
+function Person( json ) {
+  angular.extend(this, json);
+}
+
+Person.prototype = {
+  update: function() {
+    // Update it (With real code :P)
+    this.name = "Dave";
+    this.country = "Canada";
+  }
+};
+
+Person.getById = function( id ) {
+  // Do something to fetch a Person by the id
+  return new Person({
+    name: "Jesus",
+    country: "Spain"
+  });
+};
+
+// Our factory
+app.factory('personService', function() {
+  return {
+    getById: Person.getById
+  };
+});
+```
+
+這裡我們建立了 Person 這個物件，它會接收一個 json 來初始化。然後我們在 prototype 建立一個函式 (在 prototype 的函式會在所有 Person 的instances 上都能用)。然後也在直接在 Person 上建立一個函式 (像是一個 class 函式)。
+
+所以我們現在有一個可以根據 id 來建立新 Person 物件的 class 函式，然後每個實例都能修改它自己。現在，我們只需要在建立一個 service。
+
+每次我們呼叫 personService.getById 時，我們都建議了一個新的 Person 物件，所以你葛已在不同的 controllers 之間使用這個 service，這樣即使 factory 是一個 singleton，它還是會建立新的物件。
+
+<a href="http://stackoverflow.com/a/16626908/123204" target="_blank">Josh David Miller</a>提供了一個很棒的範例。
+
+<a href="http://jsbin.com/irebew/3/edit" target="_blank">範例程式</a>
+
+### Coffeescript
+
+Coffeescript can be handy with services since they provide a prettier way to create classes. Let’s see an example of the Bonus 2 using Coffeescript:
+
+Coffeescript提供一個比較好的方式來建立 class，我們來看一下上一個範例用 Coffeescript 改寫後的樣子：
+
+```coffeescript
+app.controller 'MainCtrl', ($scope, personService) ->
+  $scope.aPerson = personService.getById(1)
+
+app.controller 'SecondCtrl', ($scope, personService) ->
+  $scope.aPerson = personService.getById(2)
+  $scope.updateIt = () ->
+    $scope.aPerson.update()
+
+class Person
+
+  constructor: (json) ->
+    angular.extend @, json
+
+  update: () ->
+    @name = "Dave"
+    @country = "Canada"
+
+  @getById: (id) ->
+    new Person
+      name: "Jesus"
+      country: "Spain"
+
+app.factory 'personService', () ->
+  {
+    getById: Person.getById
+  }
+```
+
+以我的愚見來說，這漂亮多了！
+
+<a href="http://jsbin.com/uyewoq/4/edit" target="_blank">完整範例</a>
+
+### Conclusion
+
+Services 是 Angular 最酷的特色之一，我們有很多種方式可以建立它們，我們只需要挑選出最適合我們的使用情境的方式並且實作它們。
+
+如果你發現很問題，或任何可以改進的地方，請留下 issue 或是在 github 上 push request。所有的評論都會被感謝。:)
+
+
